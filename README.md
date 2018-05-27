@@ -5,7 +5,7 @@
 ----
 
 ### Decisiones de diseño:
-- Para trabajar sobre el disco virtual se accede a este en modo lectura y escritura de bytes y se lee y modifica mediante las funciones `fread()` y `fwrite()` 
+- Para trabajar sobre el disco virtual se accede a este en modo lectura y escritura de bytes (r+b) y se lee y modifica mediante las funciones `fread()` y `fwrite()`.  Decidimos enfrentar el problema de esta manera en lugar de leer bloques y asignarlos a estructuras debido a que de esta forma se actualizan los resultados de manera inmediata. 
 - Modificar el nombre de archivo solo varía el directorio. Debido a esto, como
 no es necesario acceder al bloque del archivo, no se considera una modificación
 del nombre como una modificación del archivo (de la misma forma que ocurre en
@@ -20,4 +20,3 @@ del nombre como una modificación del archivo (de la misma forma que ocurre en
 
 ### Observaciones:
 - En cz_open el modo de apertura va en minúscula (r,w).
--
