@@ -27,18 +27,24 @@ int main(int argc, char *argv[]){
 		return 2;
 	}
 
-  /*  ESTE FUNCIONA PERFECT
-  char new_file_name[11]  = "texto.txt";
-  char old_file_name[11] = "hola.wav";
-  printf("%d\n",cz_exists(new_file_name));
-  cz_ls();
-  cz_mv(old_file_name, new_file_name);
-  cz_ls();
-  printf("%d\n",cz_exists(new_file_name));
-  */
 
-  /* ESTE FUNCIONA PERFECT
-  czFILE * fp = cz_open("texto.txt", 'r');
+  char new_file_name[11]  = "test.txt";
+  char old_file_name[11] = "texto.txt";
+  printf("Existe el archivo con nombre %s?: %d\n",
+         new_file_name,
+         cz_exists(new_file_name));
+
+  cz_ls();
+
+  cz_mv(old_file_name, new_file_name);
+
+  cz_ls();
+
+  printf("Existe el archivo con nombre %s?: %d\n",
+         new_file_name,
+         cz_exists(new_file_name));
+
+  czFILE * fp = cz_open("test.txt", 'w');
   printf("name:%s\n", fp -> name);
   printf("open mode: %c\n", fp -> open_mode);
   printf("size:%i\n", fp -> size);
@@ -48,18 +54,13 @@ int main(int argc, char *argv[]){
   printf("write_ptr: %i\n", fp -> write_ptr);
   printf("read_ptr: %i\n", fp -> read_ptr);
 
-  cz_close(fp);*/
-
-  czFILE * fp = cz_open("tet.txt", 'w');
-  print_file(fp);
-  char * lines = "hola picas haddad";
+  char * lines = "ESTE ES UN TEXTO TEST";
   int bytes_written = cz_write(fp, lines, strlen(lines));
-  cz_close(fp);
   printf("%i bytes written\n", bytes_written);
 
-  cz_ls();
+  cz_close(fp);
 
-
+  /*
   fp = cz_open("tet.txt", 'r');
   char read_lines[strlen(lines)];
   int bytes_read = cz_read(fp, read_lines, strlen(lines));
@@ -68,6 +69,7 @@ int main(int argc, char *argv[]){
   printf("just read file, it said: %s\n", read_lines);
 
   cz_close(fp);
+  */
 
   /* Leemos las dimensiones del  a partir del archivo */
 	fclose(input_file);
