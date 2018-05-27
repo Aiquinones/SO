@@ -188,14 +188,14 @@ czFILE* cz_open(char* filename, char mode){
   czFILE* new_file = malloc(sizeof(czFILE));
   int len_filename = strlen(filename);
   if(len_filename>10){                                                           // TODO: manejo de errores
-    printf("Nombre de largo inválido\n");
+    fprintf(stderr, "Nombre de largo inválido\n");
     if(debugging){printf("</CZ_OPEN>\n");}
     return NULL;}
 
   int file_exists = cz_exists(filename);
   if(mode == 'r'){
     if(!file_exists){                                                            // TODO: manejo de errores
-      printf("El archivo que intenta leer no existe\n");
+      fprintf(stderr, "El archivo que intenta leer no existe\n");
       if(debugging){printf("</CZ_OPEN>\n");}
       return NULL;
     }
@@ -230,7 +230,7 @@ czFILE* cz_open(char* filename, char mode){
   }
   else if(mode == 'w'){
     if(file_exists){                                                             // TODO: manejo de errores
-      printf("El archivo que intenta crear ya existe\n");
+      fprintf(stderr, "El archivo que intenta crear ya existe\n");
       if(debugging){printf("</CZ_OPEN>\n");}
       return NULL;
     }
@@ -238,13 +238,13 @@ czFILE* cz_open(char* filename, char mode){
 
       int dir_entry = first_available_dir();
       if(dir_entry < 0){                                                         // TODO: manejo de errores
-        printf("No hay espacio disponible en el directorio para más entradas\n");
+        fprintf(stderr, "No hay espacio disponible en el directorio para más entradas\n");
         if(debugging){printf("</CZ_OPEN>\n");}
         return NULL;
       }                                                                                           // Si es que no queda espacio en el directorio
       int bitmap_entry = first_available_bitmap();
       if(bitmap_entry < 0){                                                      // TODO: manejo de errores
-        printf("No hay bloques disponibles para más archivos\n");
+        fprintf(stderr, "No hay bloques disponibles para más archivos\n");
         if(debugging){printf("</CZ_OPEN>\n");}
         return NULL;
       }
@@ -289,7 +289,7 @@ czFILE* cz_open(char* filename, char mode){
     }
   }
   else{
-    printf("Modo de apertura inválido, elija 'r' o 'w'");                        // TODO: manejo de errores
+    fprintf(stderr,"Modo de apertura inválido, elija 'r' o 'w'");                        // TODO: manejo de errores
     return NULL;
   }
 
@@ -506,6 +506,7 @@ int cz_mv(char* origin, char* destination){
   int len_origin = strlen(origin);
   int len_destination = strlen(destination);
   if(len_origin > 11 || len_destination > 11){
+    fprintf(stderr, "Largo del nombre incorrecro! Move no realizado\n");
     return 1;                                                                    // TODO: Manejo de errores. Nombre de origen o destino tiene largo inválido.
   }
 
@@ -579,7 +580,7 @@ int cz_cp(char* origin, char* destination){
 }
 
 int cz_rm(char* filename){
-  unsigned char* index_block_pointer[2];                                         // Puntero al bloque indice
+  unsigned char index_block_pointer[2];                                          // Puntero al bloque indice
   unsigned char* valid_bit = 0x00;                                               // Bit de validez cero
   int file_address = position_in_directory(filename);                            // Busco la direccion en el bloque de dirección del archivo
 
